@@ -13,45 +13,8 @@ params:
              "Magallanes", "Metropolitana", "Ríos", "Arica", "Ñuble"]
 ---
 
-```{r, include=FALSE, include=FALSE}
-reg1 <- c("Región de Tarapacá"
-, "Región de Antofagasta"
-, "Región de Atacama"
-, "Región de Coquimbo"
-, "Región del Libertador General Bernardo O'Higgins"
-, "Región de Valparaíso"
-, "Región del Maule"
-, "Región del Biobío"
-, "Región de la Araucanía"
-, "Región de los Lagos"
-, "Región de Aysén del General Carlos Ibañez del Campo"
-, "Región de Magallanes y la Antártica Chilena"
-, "Región Metropolitana"
-, "Región de Los Ríos"
-, "Región de Arica y Parinacota"
-, "Región de Ñuble")
-
-reg2 <- c("Tarapacá"
-, "Antofagasta"
-, "Atacama"
-, "Coquimbo"
-, "O'Higgins"
-, "Valparaíso"
-, "Maule"
-, "Biobío"
-, "Araucanía"
-, "Lagos"
-, "Aysén"
-, "Magallanes"
-, "Metropolitana"
-, "Ríos"
-, "Arica"
-, "Ñuble")
-
-
-reg3 <- as.data.frame(cbind(reg1,reg2))
-
-reg <- as.character(reg3[reg3$reg2 == params$reg, 1]) #esto facilita la impresión desde "ImprimirReportes_Región.R"
+```{r Definir Regiones, include=FALSE}
+source("Scripts/Reg.R", encoding = "UTF-8")
 ```
 
 ---
@@ -59,195 +22,28 @@ title: Minuta `r reg`
 date: `r format(Sys.Date(), "%d/%m/%Y")`
 ---
 
-```{r, echo=FALSE}
+```{r opciones de cada chunk, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, dpi=300)
 ```
 
 ```{r Librerías y conexión, include = FALSE}
-lista_paquetes <- c("dplyr", "ggplot2", "lubridate", "tidyr", "kableExtra",
-                    "purrr", "readr", "extrafont", "stringr", "ggmap", "readxl"); nuevos_paquetes <- lista_paquetes[!(lista_paquetes %in% installed.packages()[,"Package"])]
-lapply(nuevos_paquetes, install.packages); lapply(lista_paquetes, require, character.only = TRUE); rm(lista_paquetes, nuevos_paquetes)
-
-loadfonts()
+source("Scripts/CargarLibrerias.R", encoding = "UTF-8")
 ```
 
 ```{r Cargar Datos}
-# Cargar datos desde planillas (en este caso csv)
-Resumen_UnidadFiscalizable <- read_csv("../Datos/Resumen_UnidadFiscalizable.csv")
-
-Detalle_UnidadFiscalizableInstrumento <- read_csv("../Datos/Detalle_UnidadFiscalizableInstrumento.csv")
-
-Resumen_ProcesoSancion <- 
-  read_excel("../Datos/Resumen_ProcesoSancion.xlsx") %>% 
-  select(ProcesoSancionId, Expediente, ProcesoSancionTipoNombre, 
-         ProcesoSancionEstadoNombre, FechaInicio, FechaTermino,
-         ConfirmaPdC, MultaTotalUTA) %>% 
-    mutate(AnoInicio = year(FechaInicio),
-           AnoExpediente = as.integer(substr(Expediente, 7, 10)))
-
-Detalle_ProcesoSancionUnidadFiscalizable <- 
-  read_excel("../Datos/Detalle_ProcesoSancionUnidadFiscalizable.xlsx") %>% 
-  select(ProcesoSancionId, Nombre, 
-         CategoriaEconomica = CategoriaEconomicaNombre, 
-         SubCategoriaEconomica = SubCategoriaEconomicaNombre,
-         Comuna = ComunaNombre,
-         Region = RegionNombre)
-
-Datos_Sancion <- 
-  Resumen_ProcesoSancion %>% 
-  left_join(Detalle_ProcesoSancionUnidadFiscalizable, by = "ProcesoSancionId") %>% 
-  mutate(RegionSelect = case_when(
-    Region == reg ~ reg,
-    TRUE ~ "Resto de las Regiones"))
+source("Scripts/CargaDatos.R", encoding = "UTF-8")
 ```
 
-```{r Datos: UF por región}
-UF_reg <- Resumen_UnidadFiscalizable %>% filter(RegionNombre == reg)
-
-resumen_reg <- Resumen_UnidadFiscalizable %>% 
-  group_by("Región" = RegionNombre) %>% 
-  summarise(UFs = n()) %>% 
-  arrange(desc(UFs)) %>% 
-  ungroup() %>% 
-  mutate(Porcentaje = round(UFs/sum(UFs)*100,1),
-         Destacar = case_when(`Región` == reg ~ "Si",
-                              is.na(`Región`) ~ "Si2",
-                          TRUE ~ "No"),
-    orden_reg = case_when(
-    `Región` == "Región de Arica y Parinacota" ~ 17,
-    `Región` == "Región de Tarapacá" ~ 16,
-    `Región` == "Región de Antofagasta" ~ 15,
-    `Región` == "Región de Atacama" ~ 14,
-    `Región` == "Región de Coquimbo" ~ 13,
-    `Región` == "Región Metropolitana" ~ 12,
-    `Región` == "Región de Valparaíso" ~ 11,
-    `Región` == "Región del Libertador General Bernardo O'Higgins" ~ 10,
-    `Región` == "Región del Maule" ~ 9,
-    `Región` == "Región de Ñuble" ~ 8,
-    `Región` == "Región del Biobío" ~ 7,
-    `Región` == "Región de la Araucanía" ~ 6,
-    `Región` == "Región de Los Ríos" ~ 5,
-    `Región` == "Región de los Lagos" ~ 4,
-    `Región` == "Región de Aysén del General Carlos Ibañez del Campo" ~ 3,
-    `Región` == "Región de Magallanes y la Antártica Chilena" ~ 2,
-    is.na(`Región`) ~ 1
-  ))
-
-Porcentaje_uf_reg <- filter(resumen_reg, `Región` == reg)[[3]]
+```{r Datos: UF}
+source("Scripts/ManejoDatos_UF.R", encoding = "UTF-8")
 ```
 
-```{r Datos: UF por categoría}
-resumen_cate <- Resumen_UnidadFiscalizable %>% 
-  filter(RegionNombre == reg) %>% 
-  group_by("Categoría Económica" = CategoriaEconomicaNombre) %>% 
-  summarise(UFs = n()) %>% 
-  arrange(desc(UFs)) %>% 
-  ungroup() %>% 
-  mutate(Porcentaje = round(UFs/sum(UFs)*100,1),
-         Destacar = case_when(is.na(`Categoría Económica`) ~ "Si",
-                          TRUE ~ "No"))
+```{r Datos: FDC}
+source("Scripts/ManejoDatos_FDC.R", encoding = "UTF-8")
 ```
 
-```{r Datos: Top 5 UF por RCA}
-top_RCA <- Detalle_UnidadFiscalizableInstrumento %>% 
-  filter(SiglaInstrumento == "RCA", #Instrumento de inter?s
-         EstadoRegistroId == 1, #Siempre considerar con tablas "Detalle"
-         NombreRegion == reg #Filtro región
-         #Existen RCAs "interregionales" que en "NombreRegionPoryecto" especifican región (acá se consideran)
-         | (NombreRegion == "Interregional" & NombreRegionProyecto == reg)) %>% # | signfica "o"
-  group_by(UnidadFiscalizableId) %>% 
-  summarise(RCAs = n()) %>% 
-  left_join(Resumen_UnidadFiscalizable, by = c("UnidadFiscalizableId")) %>% 
-  select("Unidad Fiscalizable" = Nombre, RCAs) %>% 
-  arrange(desc(RCAs)) %>% 
-  top_n(5) 
-```
-
-```{r Datos: FdC por región}
-FDC_reg_porcentaje <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente) %>% 
-  group_by(Region) %>% 
-  summarise(FDC = n()) %>%
-  replace_na(list(Region = "Sin Región")) %>% 
-  arrange(desc(FDC)) %>% 
-  mutate(Porcentaje = round(FDC/sum(FDC)*100,1),
-         Destacar = case_when(Region == reg ~ "Si",
-                          TRUE ~ "No"),
-         orden_reg = case_when(
-    Region == "Región de Arica y Parinacota" ~ 16,
-    Region == "Región de Tarapacá" ~ 15,
-    Region == "Región de Antofagasta" ~ 14,
-    Region == "Región de Atacama" ~ 13,
-    Region == "Región de Coquimbo" ~ 12,
-    Region == "Región Metropolitana" ~ 11,
-    Region == "Región de Valparaíso" ~ 10,
-    Region == "Región del Libertador General Bernardo O'Higgins" ~ 9,
-    Region == "Región del Maule" ~ 8,
-    Region == "Región de Ñuble" ~ 7,
-    Region == "Región del Biobío" ~ 6,
-    Region == "Región de la Araucanía" ~ 5,
-    Region == "Región de Los Ríos" ~ 4,
-    Region == "Región de los Lagos" ~ 3,
-    Region == "Región de Aysén del General Carlos Ibañez del Campo" ~ 2,
-    Region == "Región de Magallanes y la Antártica Chilena" ~ 1
-  ),
-         rank = 1:n())
-```
-
-```{r Datos: FdC por año}
-FDC_año <- Datos_Sancion %>% 
-  distinct(Expediente, RegionSelect, AnoInicio, AnoExpediente) %>% 
-  group_by(AnoExpediente, RegionSelect) %>% 
-  summarise(FDC = (n())) %>% 
-    arrange(AnoExpediente)
-```
-
-```{r Datos: FdC categoría}
-Comparar <- FDC_año %>% 
-  ungroup() %>% group_by(RegionSelect) %>% 
-  summarise(sum(FDC))
-
-FDC_cate <- Datos_Sancion %>% 
-  distinct(Expediente, CategoriaEconomica, AnoInicio, AnoExpediente, RegionSelect) %>% 
-  group_by(CategoriaEconomica, RegionSelect) %>% 
-  summarise(FDC = n()) %>% 
-  ungroup() %>% 
-  group_by(RegionSelect) %>% 
-  mutate(Porcentaje = round(FDC/sum(FDC)*100,1),
-         Destacar = case_when(is.na(CategoriaEconomica) ~ "Si",
-                          TRUE ~ "No")) %>% 
-  filter(RegionSelect == reg)
-
-MAX_cate <- FDC_cate %>% filter(RegionSelect == reg) %>% 
-  arrange(desc(FDC))
-```
-
-```{r Datos: FDC origen}
-FDC_origen <- Datos_Sancion %>% 
-  filter(Region == reg) %>% 
-  distinct(ProcesoSancionId, ProcesoSancionTipoNombre) %>% 
-  group_by(ProcesoSancionTipoNombre) %>% 
-  summarise(FDC = n()) %>% 
-  mutate(Porcentaje = round(FDC/sum(FDC)*100,0)) %>% 
-  arrange(desc(FDC)) 
-```
-
-```{r Datos: FDC estado}
-FDC_estado <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
-  filter(Region == reg) %>% 
-  mutate(Estado = case_when(
-    ProcesoSancionEstadoNombre %in% c("Terminado - PDC", "PDC Ejecutado", "PDC en Análisis", "PDC en Ejecución") ~ "En PDC",
-    ProcesoSancionEstadoNombre %in% c("Terminado - Absolución", "Terminado - Archivado", "Terminado - Sanción") ~ "Terminado",
-    TRUE ~ "En proceso" 
-  )) %>% 
-  group_by(Estado) %>% 
-  summarise(FDC = n()) %>% 
-  mutate(Porcentaje = round(FDC/sum(FDC)*100,1)) 
-
-FDC_estado_detalle <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
-  filter(Region == reg)
+```{r Gráficos}
+source("Scripts/Graficos.R", encoding = "UTF-8")
 ```
 
 # 1. Sobre la información presentada [^1]
@@ -265,74 +61,28 @@ FDC_estado_detalle <- Datos_Sancion %>%
 ## 2.1 Localización UFs en la `r reg`
 
 ```{r Mapa UFs, fig.width=3.7, fig.height=3.35, fig.align="center"}
-coord_uf <- Resumen_UnidadFiscalizable %>%
-  select("RegionNombre", "Latitud", "Longitud") %>%
-  filter(RegionNombre == reg, !is.na(Latitud), !is.na(Longitud))
-
-register_google("AIzaSyCpuZ39bjnsBYVy72SMQsdXXngvjYaaVqc")
-
-# obteniendo mapa
-mapa <- get_map(location <- c(lon = mean(coord_uf$Longitud), lat = mean(coord_uf$Latitud)), 
-                zoom = ifelse(reg %in% c("Región de Antofagasta", "Región de Aysén del General Carlos Ibañez del Campo", "Región de Magallanes y la Antártica Chilena", "Región de Atacama"), 7, 8),
-                      maptype = "roadmap", scale = 4, crop = FALSE, colo = "bw")
-
-# ploteando mapa
-ggmap(mapa) +
-  geom_point(data = coord_uf, aes(x = Longitud, y = Latitud, fill = "red", alpha = 0.8), size = 2, shape = 21) +
-  guides(fill = FALSE, alpha = FALSE, size = FALSE) 
+source("Scripts/Mapa.R", encoding = "UTF-8")
+mapa
 ```
 
 ## 2.2 Distribución de UFs a nivel nacional
 
 ```{r Gráfico: UFs por región, fig.width=6, fig.height=3, fig.align="center"}
-resumen_reg %>% 
-  ggplot(aes(reorder(`Región`, orden_reg), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","),"%", " (", prettyNum(UFs, big.mark = ".", decimal.mark = ","),")"), fill = Destacar)) + 
-  geom_col() +
-  ylim(0, max(resumen_cate$Porcentaje)*1.22) + 
-  coord_flip() +
-  geom_text(hjust = -0.22, size = 3) +
-  scale_fill_manual(values = c("Si" = "#E87474", "No" = "light blue", "Si2" = "light gray")) + 
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(family = "Calibri")
-        )
+uf_reg
 ```
 
 ## 2.3 UFs de la `r reg` por sector
 
 ```{r Gráfico: UFs por categoría económica, fig.width=6, fig.height=2.8, fig.align="center"}
-resumen_cate %>% 
-  ggplot(aes(reorder(`Categoría Económica`, Porcentaje), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","),"%", " (", prettyNum(UFs, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
-  geom_col() +
-  ylim(0, max(resumen_cate$Porcentaje)*1.2) + 
-  coord_flip() +
-  geom_text(hjust = -0.05, size = 3) +
-  scale_fill_manual(values = c("Si" = "light gray", "No" = "light blue")) + 
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(family = "Calibri")
-        )
+uf_cat
 ```
 
-## 2.4 Las 5 UFs de `r reg` con más RCA
+## 2.4 Las 5 Categorías Económicas de `r reg` con más RCA
 
 ```{r Gráfico: top 5 UF RCA, fig.width=6, fig.height=3, fig.align="center"}
 top_RCA %>% 
   kable(format = "markdown") 
 ```
-
 
 # 3. Formulaciones de cargo
 
@@ -346,119 +96,29 @@ top_RCA %>%
 ### FDC por región
 
 ```{r Gráfico: FDC categoría, fig.width=7, fig.height=3.2, fig.align="center"}
-FDC_reg_porcentaje %>%
-  ggplot(aes(reorder(Region, Porcentaje), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
-  geom_col() +
-  ylim(0, max(FDC_reg_porcentaje$Porcentaje)*1.25) + 
-  coord_flip() +
-  geom_text(hjust = -0.22, size = 3) +
-  scale_fill_manual(values = c("Si" = "#E87474", "No" = "light blue", "Si2" = "light gray")) + 
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(family = "Calibri")
-        )
+fdc_cat
 ```
 
 ### FDC asociadas a la `r reg` por año
 
 ```{r Gráfico: FDC Año, fig.width=4.8, fig.height=2, fig.align="center"}
-FDC_año %>%
-  filter(RegionSelect == reg) %>% 
-    ggplot(aes(AnoExpediente, FDC, label = FDC)) +
-  geom_line(color = "light blue", size = 2)  +
-  geom_label(color = "#E87474")  +
-  ylim(min(FDC_año[FDC_año$RegionSelect == reg,]$FDC)-2, max(FDC_año[FDC_año$RegionSelect == reg,]$FDC)*1.05) + 
-  scale_x_continuous(breaks = c(2012:2019)) +
-  labs(y = "FDC") +
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "top",
-        legend.title = element_blank(),
-        legend.key = element_rect(size = 1),
-        legend.key.size = unit(0.5, 'lines'),
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.y = element_blank(),
-        text = element_text(family = "Calibri")
-        )
+fdc_anio
 ```
 
 ### Distribución de FDC asociadas a la `r reg` por sector
 
 ```{r Gráfico FDC región, fig.width=6, fig.height=3, fig.align="center"}
-FDC_cate %>% 
-  ggplot(aes(reorder(CategoriaEconomica, Porcentaje), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
-  geom_col() +
-  ylim(0, max(FDC_cate$Porcentaje)*1.2) + 
-  coord_flip() +
-  geom_text(hjust = -0.22, size = 3) +
-  scale_fill_manual(values = c("Si" = "light gray", "No" = "light blue")) + 
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(family = "Calibri")
-        )
+fdc_reg
 ```
 
 ### FDC asociadas a la `r reg` por origen
 
 ```{r Gráfico FDC Origen, fig.width=3.3, fig.height=2.2, fig.align="center"}
-FDC_origen %>% 
-  ggplot(aes(ProcesoSancionTipoNombre, Porcentaje, label = paste0(Porcentaje, "%", " (", FDC, ")"))) + 
-  geom_col(fill = "light blue", width = 0.6) +
-  ylim(0, max(FDC_origen$Porcentaje)*1.05) + 
-  geom_text(vjust = -0.5, size = 3) +
-  labs(y = "Porcentaje (%)") +
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "top",
-        legend.title = element_blank(),
-        legend.key = element_rect(size = 1),
-        legend.key.size = unit(0.5, 'lines'),
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(margin = margin(t = -5)),
-        text = element_text(family = "Calibri")
-        )
+fdc_origen
 ```
 
 ### FDC asociadas a la `r reg` por estado
 
 ```{r Gráfico FDC Estado, fig.width=3.3, fig.height=2.2, fig.align="center"}
-FDC_estado %>% 
-  ggplot(aes(Estado, Porcentaje, label = paste0(Porcentaje, "%", " (", FDC, ")"))) + 
-  geom_col(fill = "light blue", width = 0.6) +
-  ylim(0, max(FDC_estado$Porcentaje)*1.05) + 
-  geom_text(vjust = -0.5, size = 3) +
-  labs(y = "Porcentaje (%)") +
-  theme(panel.background = element_rect(fill = NA),
-        legend.position = "top",
-        legend.title = element_blank(),
-        legend.key = element_rect(size = 1),
-        legend.key.size = unit(0.5, 'lines'),
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(margin = margin(t = -5)),
-        text = element_text(family = "Calibri")
-        )
+fdc_estado
 ```
