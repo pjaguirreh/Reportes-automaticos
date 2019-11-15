@@ -1,0 +1,193 @@
+---
+title: "Introducción a R Markdown"
+author: "Pablo Aguirre Hörmann"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+    code_folding: hide
+---
+
+# R Markdown
+
+Este es un archivo de tipo *R Markdown* (`.Rmd`), en este tipo de archivos podemos de manera simple intercalar texto con código.
+
+El código se define en los "pedazos de código" (*code chunks*):
+
+```{r}
+# Una suma por ejemplo
+2 + 2
+```
+
+```{r, fig.align='center', fig.width=5, fig.height=4}
+# o un gráfico simple
+x <- 1:10
+y <- rnorm(10)
+plot(x, y)
+```
+
+Y estos "pedazos de código" tienen distintas opciones que por ejemplos nos permiten solo motrar el resultado y no el código que lo genera (`echo = FALSE`):
+
+```{r, echo = FALSE, fig.align='center', fig.width=5, fig.height=4}
+hist(y)
+```
+
+# Formato de texto
+
+Así como hay formas de manipular el código que trabajemos existe también una gran variedad de opciones para dar formato al texto que queramos incluir en un documento:
+
+- *cursiva* o _cursiva_
+- **negrita** o __negrita__
+- __*cursiva y negrita*__ o **_cursiva y negrita_**
+- ~~tachado~~ 
+- [link](https://portal.sma.gob.cl/)
+- `Objetos de código`
+- entre otras..
+
+También podemos definir distintos niveles de jerarquía respecto a títulos y subtítulos
+
+# Título 1
+## Título 2 
+### Título 3
+#### Título 4
+##### Título 5
+###### Título 6
+
+Por otro lado, este tipo de archivo también nos facilita escribir formulas/operaciones/objetos matemáticos (con sintáxis $\LaTeX$) tanto en linea con el texto ($\sum_{i=1}^n X_i$) como en su propio párrafo:
+
+$$\int_0^{2\pi} \sin x~dx$$
+
+$$\mathbf{X} = \left[\begin{array}
+{rrr}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{array}\right] $$
+
+Incluso podemos agregar imágenes directamente a nuestros documentos:  
+![](https://portal.sma.gob.cl/wp-content/uploads/2018/12/logo-sma-web.png) 
+
+# Código en línea
+
+Una de las principales caractéristicas que nos facilitará la creación de reportes automatizados es que no solo podemos escribir código en los "pedazos de código" (*code chunks*) sino que también podemos escribir **código en línea con el texto**.
+
+```{r}
+resultado <- 2 + 2
+rel <- round(cor(x,y), 2)
+```
+
+La suma del cálculo hecho arriba es igual a **`r resultado`** y la correlación entre `x` e `y` es **`r rel`**.
+
+__*Para más información sobre como trabajar con documentos en R Markdown ver [la hoja de referencia](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-spanish.pdf) y el libro [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)*__
+
+# Cargar datos a R
+
+`R` puede cargar datos de manera bastante sencilla desde distintos origenes, en esta demostación trabajaremos con planillas. Por ejemplo, cargaremos información desde un archivo `csv`:
+
+```{r, message=FALSE}
+library(readr) # librería con funciones de carga de datos optimizadas
+Resumen_UnidadFiscalizable <- read_csv("../Datos/Resumen_UnidadFiscalizable.csv")
+head(Resumen_UnidadFiscalizable)
+```
+
+*Muchas de las funcionalidades que ocupes en `R` tendrán que ser cargadas desde librerías/paquetes. Estas se deben instalar una sola vez (`install.packages("NombreLibreria")`) y cargadas en cada nueva sesión de `R` (`library(NombreLibreria)`)*
+
+Ahora bien, en el caso de la **Superintendencia de Medio Ambiente** trabajamos directamente desde los motores de base de datos (en específico desde *SQL Server*). En ese caso, para cargar datos, primero se debe generar una conexión con la base de datos para luego "llamar" las tablas que querramos ir usando.
+
+```{r, include = FALSE}
+library(DBI)
+library(odbc)
+library(RSQLite)
+con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
+dplyr::copy_to(con, Resumen_UnidadFiscalizable, "Resumen_UnidadFiscalizable",
+        temporary = FALSE
+)
+```
+
+Una conexión a un motor de base de datos se ve más o menos así: 
+
+```{r, eval = FALSE}
+# Cargamos librerías para la conexión con motores de bases de datos
+library(DBI)
+library(odbc)
+
+con <- dbConnect(odbc(),
+                      Driver   = "SQL Server",
+                      Server   = "ServidorX",
+                      Database = "BBDD",
+                      Trusted_Connection = "True",
+                      Port     = 1433)
+```
+
+Y dos formas de cargar estos datos en `R` son:
+
+```{r, collapse=TRUE}
+head(dbReadTable(con, "Resumen_UnidadFiscalizable"))
+head(dplyr::tbl(con, "Resumen_UnidadFiscalizable"))
+```
+
+__*Para más información sobre el uso de bases de datos con R ver el [siguiente link](https://db.rstudio.com/)*__
+
+# Manejo de datos
+
+Ahora bien, cuando queramos realizar reportes tendrémos que probablemente manipular la información que tenemos. Esto dependerá de cada caso y habrán distintas formas de hacerlo. Por ejemplo, a continuación tomaremos los datos recién cargados y:
+
+1. Seleccionaremos solo algunas de las variables/columnas para trabajar (función `select()`)
+2. Filtraremos (seleccionaremos filas) los datos para eliminar valores nulos respecto a dos variables (función `filter()`)
+3. Agruparemos las observaciones respecto a Región y Sector económico para luego calcular en número de UFs para cada grupo (funciónes `group_by()` y `summarise()`)
+4. Los pasos anteriores generarán una "planilla" de varias filas y tres columnas que luego será modificada a un formato "más cuadrado" (función `spread()`)
+
+*Todos estos pasos son distintas operaciones que serán unidas a través de un operador llamado "la pipa" (`%>%`) que permite escribir código con acciones de izquierda a derecha.*
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr) # librería de manejo de datos (seleccionar, filtrar, agrupar, etc)
+library(tidyr) # librería para modificación de "forma" de datos ("pivot", "unpivot")
+
+# Generamos un nuevo data set "Resumen_UnidadFiscalizable_cuadro" luego de hacer toda la manipulación
+
+Resumen_UnidadFiscalizable_cuadro <- 
+  # datos originales
+  Resumen_UnidadFiscalizable %>%
+  # seleccionamos cuatro variables/columnas
+  select(UnidadFiscalizableId, RegionNombre, CategoriaEconomicaNombre) %>% 
+  # dejamos solo aquellas observaciones/filas que no tienen valores nulos para RegionNombre ni CategoriaEconomicaNombre
+  filter(!is.na(RegionNombre) & !is.na(CategoriaEconomicaNombre)) %>% 
+  # Agrupamos las observaciones/filas respecto a las variables RegionNombre y CategoriaEconomicaNombre
+  group_by(RegionNombre, CategoriaEconomicaNombre) %>% 
+  # Calculamos el número de filas/observaciones para cada uno de los grupos
+  summarise("Número de UFs" = n()) %>% 
+  # Modificamos la forma de los datos (a "más cuadrado")
+  spread(CategoriaEconomicaNombre, `Número de UFs`)
+
+Resumen_UnidadFiscalizable_cuadro
+```
+
+# Visualización
+
+De forma similar podemos también 
+
+```{r, fig.align='center'}
+Resumen_UnidadFiscalizable_reg <-
+  # datos originales
+  Resumen_UnidadFiscalizable %>%
+  # seleccionamos cuatro variables/columnas
+  select(UnidadFiscalizableId, RegionNombre, CategoriaEconomicaNombre) %>% 
+  # dejamos solo aquellas observaciones/filas que no tienen valores nulos para RegionNombre ni CategoriaEconomicaNombre
+  filter(!is.na(RegionNombre) & !is.na(CategoriaEconomicaNombre)) %>% 
+  # Agrupamos las observaciones/filas respecto a las variables RegionNombre y CategoriaEconomicaNombre
+  group_by(RegionNombre, CategoriaEconomicaNombre) %>% 
+  # Calculamos el número de filas/observaciones para cada uno de los grupos
+  summarise("Número de UFs" = n())
+
+library(ggplot2)
+
+Resumen_UnidadFiscalizable_reg %>% 
+  ggplot(aes(RegionNombre, `Número de UFs`)) + 
+  geom_col() + 
+  coord_flip() +
+  xlab("") +
+  ylab("")
+```
+
+__*En estos ejemplos usamos principalmente librerías del denominado `tidyverse` que es un conjunto de librerías especializadas en *data science*. Para más información pueden revisar el [siguiente link](https://www.tidyverse.org/)*__
