@@ -2,11 +2,11 @@
 title: "Introducción a R Markdown"
 author: "Pablo Aguirre Hörmann"
 output:
-  word_document: default
-  pdf_document: default
   html_document:
     df_print: paged
     code_folding: hide
+  pdf_document: default
+  word_document: default
 ---
 
 # R Markdown
@@ -37,26 +37,28 @@ hist(y)
 
 Así como hay formas de manipular el código que trabajemos existe también una gran variedad de opciones para dar formato al texto que queramos incluir en un documento:
 
-- *cursiva* o _cursiva_
-- **negrita** o __negrita__
-- __*cursiva y negrita*__ o **_cursiva y negrita_**
-- ~~tachado~~ 
-- [link](https://portal.sma.gob.cl/)
-- `Objetos de código`
+- *cursiva* (`*cursiva*`) o _cursiva_ (`_cursiva_`)
+- **negrita** (`**negrita**`) o __negrita__ (`__negrita__`)
+- __*cursiva y negrita*__ (`__*cursiva y negrita*__`) o **_cursiva y negrita_** (`**_cursiva y negrita_**`)
+- ~~tachado~~ (`~~tachado~~`)
+- [link](https://portal.sma.gob.cl/) (`[link](https://portal.sma.gob.cl/)`)
+- `Objetos de código` (``Objetos de código``)
 - entre otras..
 
 También podemos definir distintos niveles de jerarquía respecto a títulos y subtítulos
 
-# Título 1
-## Título 2 
-### Título 3
-#### Título 4
-##### Título 5
-###### Título 6
+
+# Título 1 (`# Título 1`)
+## Título 2 (`## Título 2`) 
+### Título 3 (`### Título 3`)
+#### Título 4 (`#### Título 4`)
+##### Título 5 (`##### Título 5`)
+###### Título 6 (`###### Título 6`)
 
 Por otro lado, este tipo de archivo también nos facilita escribir formulas/operaciones/objetos matemáticos (con sintáxis $\LaTeX$) tanto en linea con el texto ($\sum_{i=1}^n X_i$) como en su propio párrafo:
 
-$$\int_0^{2\pi} \sin x~dx$$
+`\int_0^{2\pi} \sin x~dx`
+$$\int_0^{2\pi} \sin x~dx$$ 
 
 $$\mathbf{X} = \left[\begin{array}
 {rrr}
