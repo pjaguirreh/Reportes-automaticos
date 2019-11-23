@@ -48,7 +48,6 @@ resumen_cate <- Resumen_UnidadFiscalizable %>%
 
 top_RCA <- Datos_Instrumento %>% 
   filter(SiglaInstrumento == "RCA", #Instrumento de inter?s
-         EstadoRegistroId == 1, #Siempre considerar con tablas "Detalle"
          NombreRegion == reg #Filtro región
          #Existen RCAs "interregionales" que en "NombreRegionPoryecto" especifican región (acá se consideran)
          | (NombreRegion == "Interregional" & NombreRegionProyecto == reg)) %>% # | signfica "o"

@@ -11,8 +11,7 @@ Datos_Instrumento <- Detalle_UnidadFiscalizableInstrumento %>%
 Resumen_ProcesoSancion <- 
   read_excel("../Datos/Resumen_ProcesoSancion.xlsx") %>% 
   select(ProcesoSancionId, Expediente, ProcesoSancionTipoNombre, 
-         ProcesoSancionEstadoNombre, FechaInicio, FechaTermino,
-         ConfirmaPdC, MultaTotalUTA) %>% 
+         ProcesoSancionEstadoNombre, FechaInicio) %>% 
   mutate(AnoInicio = year(FechaInicio),
          AnoExpediente = as.integer(substr(Expediente, 7, 10)))
 
@@ -20,8 +19,6 @@ Detalle_ProcesoSancionUnidadFiscalizable <-
   read_excel("../Datos/Detalle_ProcesoSancionUnidadFiscalizable.xlsx") %>% 
   select(ProcesoSancionId,  
          CategoriaEconomica = CategoriaEconomicaNombre, 
-         SubCategoriaEconomica = SubCategoriaEconomicaNombre,
-         Comuna = ComunaNombre,
          Region = RegionNombre)
 
 Datos_Sancion <- 
