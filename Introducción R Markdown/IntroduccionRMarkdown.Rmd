@@ -88,8 +88,8 @@ __*Para más información sobre como trabajar con documentos en R Markdown ver [
 `R` puede cargar datos de manera bastante sencilla desde distintos origenes, en esta demostación trabajaremos con planillas. Por ejemplo, cargaremos información desde un archivo `csv`:
 
 ```{r, message=FALSE}
-library(readr) # librería con funciones de carga de datos optimizadas
-Resumen_UnidadFiscalizable <- read_csv("../Datos/Resumen_UnidadFiscalizable.csv")
+library(readxl) # librería con funciones de carga de datos optimizadas
+Resumen_UnidadFiscalizable <- read_excel("../Datos/Resumen_UnidadFiscalizable.xlsx")
 head(Resumen_UnidadFiscalizable)
 ```
 

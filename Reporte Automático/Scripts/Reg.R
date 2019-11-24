@@ -34,5 +34,3 @@ reg2 <- c("Tarapacá"
 
 
 reg3 <- as.data.frame(cbind(reg1,reg2))
-
-reg <- as.character(reg3[reg3$reg2 == params$reg, 1]) #esto facilita la impresión desde "ImprimirReportes_Región.R"
