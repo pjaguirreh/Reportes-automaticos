@@ -1,29 +1,18 @@
-# Cargar datos desde planillas (en este caso csv)
-Resumen_UnidadFiscalizable <- read_csv("../Datos/Resumen_UnidadFiscalizable.csv")
+# Cargar datos desde (4) planillas 
 
-Detalle_UnidadFiscalizableInstrumento <- read_csv("../Datos/Detalle_UnidadFiscalizableInstrumento.csv")
+Resumen_UnidadFiscalizable <- 
+  read_excel("../Datos/Resumen_UnidadFiscalizable.xlsx")
 
-Datos_Instrumento <- Detalle_UnidadFiscalizableInstrumento %>% 
-  left_join(
-    select(Resumen_UnidadFiscalizable, UnidadFiscalizableId, CategoriaEconomicaNombre, RegionNombre)
-  )
-
-Resumen_ProcesoSancion <- 
-  read_excel("../Datos/Resumen_ProcesoSancion.xlsx") %>% 
-  select(ProcesoSancionId, Expediente, ProcesoSancionTipoNombre, 
-         ProcesoSancionEstadoNombre, FechaInicio) %>% 
-  mutate(AnoInicio = year(FechaInicio),
-         AnoExpediente = as.integer(substr(Expediente, 7, 10)))
+Datos_Instrumento <- 
+  read_excel("../Datos/Datos_Instrumento.xlsx")
 
 Detalle_ProcesoSancionUnidadFiscalizable <- 
-  read_excel("../Datos/Detalle_ProcesoSancionUnidadFiscalizable.xlsx") %>% 
-  select(ProcesoSancionId,  
-         CategoriaEconomica = CategoriaEconomicaNombre, 
-         Region = RegionNombre)
+  read_excel("../Datos/Detalle_ProcesoSancionUnidadFiscalizable.xlsx")
 
 Datos_Sancion <- 
-  Resumen_ProcesoSancion %>% 
-  left_join(Detalle_ProcesoSancionUnidadFiscalizable, by = "ProcesoSancionId") %>% 
+  read_excel("../Datos/Datos_Sancion.xlsx") 
+
+Datos_Sancion <- Datos_Sancion %>% 
   mutate(RegionSelect = case_when(
     Region == reg ~ reg,
     TRUE ~ "Resto de las Regiones"))

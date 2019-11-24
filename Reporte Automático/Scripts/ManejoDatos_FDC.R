@@ -1,7 +1,7 @@
 # Datos: FdC por región
 
 FDC_reg_porcentaje <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente) %>% 
+  distinct(ProcesoSancionId, Region, AnoInicio, AnoExpediente) %>% 
   group_by(Region) %>% 
   summarise(FDC = n()) %>%
   replace_na(list(Region = "Sin Región")) %>% 
@@ -32,7 +32,7 @@ FDC_reg_porcentaje <- Datos_Sancion %>%
 # Datos: FdC por año
 
 FDC_año <- Datos_Sancion %>% 
-  distinct(Expediente, RegionSelect, AnoInicio, AnoExpediente) %>% 
+  distinct(ProcesoSancionId, RegionSelect, AnoInicio, AnoExpediente) %>% 
   group_by(AnoExpediente, RegionSelect) %>% 
   summarise(FDC = (n())) %>% 
   arrange(AnoExpediente)
@@ -44,7 +44,7 @@ Comparar <- FDC_año %>%
   summarise(sum(FDC))
 
 FDC_cate <- Datos_Sancion %>% 
-  distinct(Expediente, CategoriaEconomica, AnoInicio, AnoExpediente, RegionSelect) %>% 
+  distinct(ProcesoSancionId, CategoriaEconomica, AnoInicio, AnoExpediente, RegionSelect) %>% 
   group_by(CategoriaEconomica, RegionSelect) %>% 
   summarise(FDC = n()) %>% 
   ungroup() %>% 
@@ -70,7 +70,7 @@ FDC_origen <- Datos_Sancion %>%
 # Datos: FDC estado
 
 FDC_estado <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
+  distinct(ProcesoSancionId, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
   filter(Region == reg) %>% 
   mutate(Estado = case_when(
     ProcesoSancionEstadoNombre %in% c("Terminado - PDC", "PDC Ejecutado", "PDC en Análisis", "PDC en Ejecución") ~ "En PDC",
@@ -82,6 +82,6 @@ FDC_estado <- Datos_Sancion %>%
   mutate(Porcentaje = round(FDC/sum(FDC)*100,1)) 
 
 FDC_estado_detalle <- Datos_Sancion %>% 
-  distinct(Expediente, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
+  distinct(ProcesoSancionId, Region, AnoInicio, AnoExpediente, ProcesoSancionEstadoNombre) %>% 
   filter(Region == reg)
 
