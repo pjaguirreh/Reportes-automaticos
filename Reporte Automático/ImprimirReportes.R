@@ -1,3 +1,5 @@
+setwd("C:/Users/pjagu/OneDrive/Documents/GitHub/Reportes-automaticos/Reporte Automático")
+
 # Crear función de reporte
 imprimir_reporte <- function(region) {
   # funcion para imprimir reportes
@@ -16,7 +18,7 @@ imprimir_reporte <- function(region) {
                           "Reportes por región/")
 }
 
-#imprimir_reporte("Araucanía")
+imprimir_reporte("Araucanía")
 
 # Crear un vector con todas las regiones
 regiones <- c("Tarapacá"

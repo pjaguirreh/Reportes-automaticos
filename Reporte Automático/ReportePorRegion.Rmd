@@ -4,13 +4,13 @@ output: #word_document
   word_document:
      reference_docx: FormatoReporte.docx
 params:
-  reg: #"Araucanía" 
-    label: "Región"
-    value: "Araucanía" 
-    input: select
-    choices: ["Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "O'Higgins", 
-             "Valparaíso", "Maule", "Biobío", "Araucanía", "Lagos", "Aysén", 
-             "Magallanes", "Metropolitana", "Ríos", "Arica", "Ñuble"]
+  reg: "Araucanía" 
+    #label: "Región"
+    #value: "Araucanía" 
+    #input: select
+    #choices: ["Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "O'Higgins", 
+    #         "Valparaíso", "Maule", "Biobío", "Araucanía", "Lagos", "Aysén", 
+    #         "Magallanes", "Metropolitana", "Ríos", "Arica", "Ñuble"]
 ---
 
 ```{r Definir Regiones, include=FALSE}
