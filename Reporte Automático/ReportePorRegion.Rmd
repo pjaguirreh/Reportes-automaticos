@@ -49,7 +49,7 @@ source("Scripts/Graficos.R", encoding = "UTF-8")
 
 # 1. Sobre la información presentada [^1]
 
-###### A continuación, se presenta una minuta con diferentes indicadores asociados a la **`r reg`**. Los datos son recopilados a partir de los diferentes sistemas de información disponibles de la Superintendencia del Medio Ambiente y consideran la información actualizada al **`r format(Sys.Date(), "%d/%m/%Y")`**. 
+###### A continuación, se presenta una minuta con diferentes indicadores asociados a la **`r reg`**. Los datos son recopilados desde de los diferentes sistemas de información disponibles de la Superintendencia del Medio Ambiente y consideran la información actualizada al **`r format(Sys.Date(), "%d/%m/%Y")`**. 
 
 [^1]: **UF**: Unidad Fiscalizable / **RCA**: Resolución de Calificación Ambiental / **IA**: Inspección Ambiental / **PPDA**: Plan de Prevensión y Descontaminación Ambiental / **RSMA**: Resolución de normas e instrucciones de carácter de la Superintendencia de Medio ambiente / **PC/PDC**: Programa de Cumplimiento / **NC**: Norma de Contaminación / **LEY**: Ley Ambiental / **REG**: Reglamento / **NE**: Norma de Emisión / **MP**: Medida Provisional / **FDC**: Formulación de Cargos / **MM**: Millones
 
