@@ -53,5 +53,7 @@ top_RCA <- Datos_Instrumento %>%
          | (NombreRegion == "Interregional" & NombreRegionProyecto == reg)) %>% # | signfica "o"
   group_by(CategoriaEconomicaNombre) %>% 
   summarise(RCAs = n()) %>% 
+  ungroup() %>% 
+  rename("Categoría Económica" = CategoriaEconomicaNombre) %>% 
   arrange(desc(RCAs)) %>% 
   top_n(5) 
