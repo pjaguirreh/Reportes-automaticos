@@ -13,6 +13,10 @@ params:
     #         "Magallanes", "Metropolitana", "Ríos", "Arica", "Ñuble"]
 ---
 
+```{r Librerías/Pquetes, include = FALSE}
+source("Scripts/CargarLibrerias.R", encoding = "UTF-8")
+```
+
 ```{r Definir Regiones, include=FALSE}
 source("Scripts/Reg.R", encoding = "UTF-8")
 reg <- as.character(reg3[reg3$reg2 == params$reg, 1]) # esto facilita la impresión masiva de reportes
@@ -23,12 +27,8 @@ title: Minuta `r reg`
 date: `r format(Sys.Date(), "%d/%m/%Y")`
 ---
 
-```{r opciones de cada chunk, echo=FALSE}
+```{r opciones de cada chunk de código, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, dpi=300)
-```
-
-```{r Librerías y conexión, include = FALSE}
-source("Scripts/CargarLibrerias.R", encoding = "UTF-8")
 ```
 
 ```{r Cargar Datos}
@@ -47,6 +47,11 @@ source("Scripts/ManejoDatos_FDC.R", encoding = "UTF-8")
 source("Scripts/Graficos.R", encoding = "UTF-8")
 ```
 
+```{r Mapa}
+source("Scripts/Mapa.R", encoding = "UTF-8")
+```
+
+
 # 1. Sobre la información presentada [^1]
 
 ###### A continuación, se presenta una minuta con diferentes indicadores asociados a la **`r reg`**. Los datos son recopilados desde de los diferentes sistemas de información disponibles de la Superintendencia del Medio Ambiente y consideran la información actualizada al **`r format(Sys.Date(), "%d/%m/%Y")`**. 
@@ -61,9 +66,8 @@ source("Scripts/Graficos.R", encoding = "UTF-8")
 
 ## 2.1 Localización UFs en la `r reg`
 
-```{r Mapa UFs, fig.width=3.7, fig.height=3.35, fig.align="center"}
-source("Scripts/Mapa.R", encoding = "UTF-8")
-mapa
+```{r Mapa UFs, out.width="400px", fig.align="center"}
+knitr::include_graphics("Mapa/mapa.png")
 ```
 
 ## 2.2 Distribución de UFs a nivel nacional
@@ -100,7 +104,7 @@ top_RCA %>%
 ### FDC por región
 
 ```{r Gráfico: FDC categoría, fig.width=7, fig.height=3.2, fig.align="center"}
-fdc_cat
+fdc_reg
 ```
 
 ### FDC asociadas a la `r reg` por año
@@ -112,7 +116,7 @@ fdc_anio
 ### Distribución de FDC asociadas a la `r reg` por sector
 
 ```{r Gráfico FDC región, fig.width=6, fig.height=3, fig.align="center"}
-fdc_reg
+fdc_cat
 ```
 
 ### FDC asociadas a la `r reg` por origen

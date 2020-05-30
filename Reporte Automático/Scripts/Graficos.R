@@ -38,10 +38,10 @@ uf_cat <- resumen_cate %>%
         text = element_text(family = "Calibri")
   )
 
-# FDC categoría
+# FDC region
 
-fdc_cat <- FDC_reg_porcentaje %>%
-  ggplot(aes(reorder(Region, Porcentaje), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
+fdc_reg <- FDC_reg_porcentaje %>%
+  ggplot(aes(reorder(Region, orden_reg), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
   geom_col() +
   ylim(0, max(FDC_reg_porcentaje$Porcentaje)*1.25) + 
   coord_flip() +
@@ -82,9 +82,9 @@ fdc_anio <- FDC_año %>%
         text = element_text(family = "Calibri")
   )
 
-# FDC región
+# FDC categoria
 
-fdc_reg <- FDC_cate %>% 
+fdc_cat <- FDC_cate %>% 
   ggplot(aes(reorder(CategoriaEconomica, Porcentaje), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
   geom_col() +
   ylim(0, max(FDC_cate$Porcentaje)*1.2) + 
