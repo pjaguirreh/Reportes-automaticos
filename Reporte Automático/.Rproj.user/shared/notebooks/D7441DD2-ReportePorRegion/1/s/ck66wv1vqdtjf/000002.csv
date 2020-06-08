@@ -1,0 +1,2 @@
+"0","source(""Scripts/Reg.R"", encoding = ""UTF-8"")"
+"0","reg <- as.character(reg3[reg3$reg2 == params$reg, 1]) # esto facilita la impresión masiva de reportes"

@@ -1,0 +1,13 @@
+"0","source(""Scripts/ManejoDatos_FDC.R"", encoding = ""UTF-8"")"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"
+"2","`summarise()` regrouping output by 'AnoExpediente' (override with `.groups` argument)
+"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"
+"2","`summarise()` regrouping output by 'CategoriaEconomica' (override with `.groups` argument)
+"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"

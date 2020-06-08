@@ -7,4 +7,6 @@ nuevos_paquetes <- lista_paquetes[!(lista_paquetes %in% installed.packages()[,"P
                     lapply(nuevos_paquetes, install.packages); lapply(lista_paquetes, require, character.only = TRUE)
                     
 rm(lista_paquetes, nuevos_paquetes)
-loadfonts()
+#font_import()
+loadfonts(device = "win")
+

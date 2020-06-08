@@ -4,17 +4,12 @@ output: #word_document
   word_document:
      reference_docx: FormatoReporte.docx
 params:
-  reg: "Araucanía" 
-    #label: "Región"
-    #value: "Araucanía" 
-    #input: select
-    #choices: ["Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "O'Higgins", 
-    #         "Valparaíso", "Maule", "Biobío", "Araucanía", "Lagos", "Aysén", 
-    #         "Magallanes", "Metropolitana", "Ríos", "Arica", "Ñuble"]
+  reg: "Tarapacá" 
 ---
 
 ```{r Librerías/Pquetes, include = FALSE}
 source("Scripts/CargarLibrerias.R", encoding = "UTF-8")
+windowsFonts("Arial" = windowsFont("Calibri"))
 ```
 
 ```{r Definir Regiones, include=FALSE}
@@ -54,7 +49,7 @@ source("Scripts/Mapa.R", encoding = "UTF-8")
 
 # 1. Sobre la información presentada [^1]
 
-###### A continuación, se presenta una minuta con diferentes indicadores asociados a la **`r reg`**. Los datos son recopilados desde de los diferentes sistemas de información disponibles de la Superintendencia del Medio Ambiente y consideran la información actualizada al **`r format(Sys.Date(), "%d/%m/%Y")`**. 
+###### A continuación, se presenta una ejemplo de minuta con diferentes indicadores asociados a la **`r reg`**. Los datos son simulados y no deben ser considerados en ningún caso como información oficial de la SMA. Este reporte fue generado el **`r format(Sys.Date(), "%d/%m/%Y")`**. 
 
 [^1]: **UF**: Unidad Fiscalizable / **RCA**: Resolución de Calificación Ambiental / **IA**: Inspección Ambiental / **PPDA**: Plan de Prevensión y Descontaminación Ambiental / **RSMA**: Resolución de normas e instrucciones de carácter de la Superintendencia de Medio ambiente / **PC/PDC**: Programa de Cumplimiento / **NC**: Norma de Contaminación / **LEY**: Ley Ambiental / **REG**: Reglamento / **NE**: Norma de Emisión / **MP**: Medida Provisional / **FDC**: Formulación de Cargos / **MM**: Millones
 
@@ -104,7 +99,22 @@ top_RCA %>%
 ### FDC por región
 
 ```{r Gráfico: FDC categoría, fig.width=7, fig.height=3.2, fig.align="center"}
-fdc_reg
+FDC_reg_porcentaje %>%
+  ggplot(aes(reorder(Region, orden_reg), Porcentaje, label = paste0(prettyNum(Porcentaje, big.mark = ".", decimal.mark = ","), "%", " (", prettyNum(FDC, big.mark = ".", decimal.mark = ","), ")"), fill = Destacar)) + 
+  geom_col() +
+  ylim(0, max(FDC_reg_porcentaje$Porcentaje)*1.25) + 
+  coord_flip() +
+  geom_text(hjust = -0.22, size = 3) +
+  scale_fill_manual(values = c("Si" = "#E87474", "No" = "light blue", "Si2" = "light gray")) + 
+  theme(panel.background = element_rect(fill = NA),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(),
+        text = element_text(family = "Calibri"))
 ```
 
 ### FDC asociadas a la `r reg` por año

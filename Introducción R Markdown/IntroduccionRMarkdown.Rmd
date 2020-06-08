@@ -1,13 +1,18 @@
 ---
 title: "Introducción a R Markdown"
 author: "Pablo Aguirre Hörmann"
+date: "6/7/2020"
 output:
   html_document:
     df_print: paged
     code_folding: hide
-  pdf_document: default
   word_document: default
 ---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 
 # R Markdown
 
@@ -37,12 +42,12 @@ hist(y)
 
 Así como hay formas de manipular el código que trabajemos existe también una gran variedad de opciones para dar formato al texto que queramos incluir en un documento:
 
-- *cursiva* (`*cursiva*`) o _cursiva_ (`_cursiva_`)
-- **negrita** (`**negrita**`) o __negrita__ (`__negrita__`)
-- __*cursiva y negrita*__ (`__*cursiva y negrita*__`) o **_cursiva y negrita_** (`**_cursiva y negrita_**`)
-- ~~tachado~~ (`~~tachado~~`)
-- [link](https://portal.sma.gob.cl/) (`[link](https://portal.sma.gob.cl/)`)
-- `Objetos de código` (``Objetos de código``)
+- *cursiva* 
+- **negrita** 
+- __*cursiva y negrita*__ 
+- ~~tachado~~ 
+- [link](https://gobierno.uai.cl/centro-investigacion/goblab-uai/) 
+- `Objetos de código` 
 - entre otras..
 
 También podemos definir distintos niveles de jerarquía respecto a títulos y subtítulos
@@ -57,7 +62,6 @@ También podemos definir distintos niveles de jerarquía respecto a títulos y s
 
 Por otro lado, este tipo de archivo también nos facilita escribir formulas/operaciones/objetos matemáticos (con sintáxis $\LaTeX$) tanto en linea con el texto ($\sum_{i=1}^n X_i$) como en su propio párrafo:
 
-`\int_0^{2\pi} \sin x~dx`
 $$\int_0^{2\pi} \sin x~dx$$ 
 
 $$\mathbf{X} = \left[\begin{array}
@@ -68,7 +72,7 @@ $$\mathbf{X} = \left[\begin{array}
 \end{array}\right] $$
 
 Incluso podemos agregar imágenes directamente a nuestros documentos:  
-![](https://portal.sma.gob.cl/wp-content/uploads/2018/12/logo-sma-web.png) 
+![](https://goblab.uai.cl/wp-content/uploads/2019/12/Logo-GobLab-UAI.png) 
 
 # Código en línea
 
@@ -95,7 +99,7 @@ head(Resumen_UnidadFiscalizable)
 
 *Muchas de las funcionalidades que ocupes en `R` tendrán que ser cargadas desde librerías/paquetes. Estas se deben instalar una sola vez (`install.packages("NombreLibreria")`) y cargadas en cada nueva sesión de `R` (`library(NombreLibreria)`)*
 
-Ahora bien, en el caso de la **Superintendencia de Medio Ambiente** trabajamos directamente desde los motores de base de datos (en específico desde *SQL Server*). En ese caso, para cargar datos, primero se debe generar una conexión con la base de datos para luego "llamar" las tablas que querramos ir usando.
+Ahora bien, en muchos casos tendrán que interactuar con datos obtenidos desde motores de base de datos (por ejemplo *MS SQL Server*). En ese caso, para cargar datos, primero se debe generar una conexión con la base de datos para luego "llamar" las tablas que querramos ir usando.
 
 ```{r, include = FALSE}
 library(DBI)
