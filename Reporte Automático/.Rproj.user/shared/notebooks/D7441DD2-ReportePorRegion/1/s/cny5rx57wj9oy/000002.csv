@@ -1,2 +1,376 @@
 "0","source(""Scripts/CargarLibrerias.R"", encoding = ""UTF-8"")"
+"2","Agency FB already registered with windowsFonts().
+"
+"2","Algerian already registered with windowsFonts().
+"
+"2","Anonymous already registered with windowsFonts().
+"
+"2","Arial Black already registered with windowsFonts().
+"
+"2","Arial already registered with windowsFonts().
+"
+"2","Arial Narrow already registered with windowsFonts().
+"
+"2","Arial Rounded MT Bold already registered with windowsFonts().
+"
+"2","Bahnschrift already registered with windowsFonts().
+"
+"2","Baskerville Old Face already registered with windowsFonts().
+"
+"2","Bauhaus 93 already registered with windowsFonts().
+"
+"2","Bell MT already registered with windowsFonts().
+"
+"2","Berlin Sans FB already registered with windowsFonts().
+"
+"2","Berlin Sans FB Demi already registered with windowsFonts().
+"
+"2","Bernard MT Condensed already registered with windowsFonts().
+"
+"2","Blackadder ITC already registered with windowsFonts().
+"
+"2","Bodoni MT already registered with windowsFonts().
+"
+"2","Bodoni MT Black already registered with windowsFonts().
+"
+"2","Bodoni MT Condensed already registered with windowsFonts().
+"
+"2","Bodoni MT Poster Compressed already registered with windowsFonts().
+"
+"2","Book Antiqua already registered with windowsFonts().
+"
+"2","Bookman Old Style already registered with windowsFonts().
+"
+"2","Bookshelf Symbol 7 already registered with windowsFonts().
+"
+"2","Bradley Hand ITC already registered with windowsFonts().
+"
+"2","Britannic Bold already registered with windowsFonts().
+"
+"2","Broadway already registered with windowsFonts().
+"
+"2","Brush Script MT already registered with windowsFonts().
+"
+"2","Calibri already registered with windowsFonts().
+"
+"2","Calibri Light already registered with windowsFonts().
+"
+"2","Californian FB already registered with windowsFonts().
+"
+"2","Calisto MT already registered with windowsFonts().
+"
+"2","Cambria already registered with windowsFonts().
+"
+"2","Candara already registered with windowsFonts().
+"
+"2","Candara Light already registered with windowsFonts().
+"
+"2","Castellar already registered with windowsFonts().
+"
+"2","Centaur already registered with windowsFonts().
+"
+"2","Century already registered with windowsFonts().
+"
+"2","Century Gothic already registered with windowsFonts().
+"
+"2","Century Schoolbook already registered with windowsFonts().
+"
+"2","Chiller already registered with windowsFonts().
+"
+"2","Colonna MT already registered with windowsFonts().
+"
+"2","Comic Sans MS already registered with windowsFonts().
+"
+"2","Consolas already registered with windowsFonts().
+"
+"2","Constantia already registered with windowsFonts().
+"
+"2","Cooper Black already registered with windowsFonts().
+"
+"2","Copperplate Gothic Bold already registered with windowsFonts().
+"
+"2","Copperplate Gothic Light already registered with windowsFonts().
+"
+"2","Corbel already registered with windowsFonts().
+"
+"2","Corbel Light already registered with windowsFonts().
+"
+"2","Courier New already registered with windowsFonts().
+"
+"2","Curlz MT already registered with windowsFonts().
+"
+"2","Dubai already registered with windowsFonts().
+"
+"2","Dubai Light already registered with windowsFonts().
+"
+"2","Dubai Medium already registered with windowsFonts().
+"
+"2","Ebrima already registered with windowsFonts().
+"
+"2","Edwardian Script ITC already registered with windowsFonts().
+"
+"2","Elephant already registered with windowsFonts().
+"
+"2","Engravers MT already registered with windowsFonts().
+"
+"2","Eras Bold ITC already registered with windowsFonts().
+"
+"2","Eras Demi ITC already registered with windowsFonts().
+"
+"2","Eras Light ITC already registered with windowsFonts().
+"
+"2","Eras Medium ITC already registered with windowsFonts().
+"
+"2","Felix Titling already registered with windowsFonts().
+"
+"2","Footlight MT Light already registered with windowsFonts().
+"
+"2","Forte already registered with windowsFonts().
+"
+"2","Franklin Gothic Book already registered with windowsFonts().
+"
+"2","Franklin Gothic Demi already registered with windowsFonts().
+"
+"2","Franklin Gothic Demi Cond already registered with windowsFonts().
+"
+"2","Franklin Gothic Heavy already registered with windowsFonts().
+"
+"2","Franklin Gothic Medium already registered with windowsFonts().
+"
+"2","Franklin Gothic Medium Cond already registered with windowsFonts().
+"
+"2","Freestyle Script already registered with windowsFonts().
+"
+"2","French Script MT already registered with windowsFonts().
+"
+"2","Gabriola already registered with windowsFonts().
+"
+"2","Gadugi already registered with windowsFonts().
+"
+"2","Garamond already registered with windowsFonts().
+"
+"2","Georgia already registered with windowsFonts().
+"
+"2","Gigi already registered with windowsFonts().
+"
+"2","Gill Sans Ultra Bold already registered with windowsFonts().
+"
+"2","Gill Sans Ultra Bold Condensed already registered with windowsFonts().
+"
+"2","Gill Sans MT already registered with windowsFonts().
+"
+"2","Gill Sans MT Condensed already registered with windowsFonts().
+"
+"2","Gill Sans MT Ext Condensed Bold already registered with windowsFonts().
+"
+"2","Gloucester MT Extra Condensed already registered with windowsFonts().
+"
+"2","Goudy Old Style already registered with windowsFonts().
+"
+"2","Goudy Stout already registered with windowsFonts().
+"
+"2","Haettenschweiler already registered with windowsFonts().
+"
+"2","Harlow Solid Italic already registered with windowsFonts().
+"
+"2","Harrington already registered with windowsFonts().
+"
+"2","High Tower Text already registered with windowsFonts().
+"
+"2","HoloLens MDL2 Assets already registered with windowsFonts().
+"
+"2","Impact already registered with windowsFonts().
+"
+"2","Imprint MT Shadow already registered with windowsFonts().
+"
+"2","Informal Roman already registered with windowsFonts().
+"
+"2","Ink Free already registered with windowsFonts().
+"
+"2","Javanese Text already registered with windowsFonts().
+"
+"2","Jokerman already registered with windowsFonts().
+"
+"2","Juice ITC already registered with windowsFonts().
+"
+"2","Kristen ITC already registered with windowsFonts().
+"
+"2","Kunstler Script already registered with windowsFonts().
+"
+"2","Wide Latin already registered with windowsFonts().
+"
+"2","Leelawadee already registered with windowsFonts().
+"
+"2","Leelawadee UI already registered with windowsFonts().
+"
+"2","Leelawadee UI Semilight already registered with windowsFonts().
+"
+"2","Lucida Bright already registered with windowsFonts().
+"
+"2","Lucida Calligraphy already registered with windowsFonts().
+"
+"2","Lucida Console already registered with windowsFonts().
+"
+"2","Lucida Fax already registered with windowsFonts().
+"
+"2","Lucida Handwriting already registered with windowsFonts().
+"
+"2","Lucida Sans already registered with windowsFonts().
+"
+"2","Lucida Sans Typewriter already registered with windowsFonts().
+"
+"2","Lucida Sans Unicode already registered with windowsFonts().
+"
+"2","Magneto already registered with windowsFonts().
+"
+"2","Maiandra GD already registered with windowsFonts().
+"
+"2","Malgun Gothic already registered with windowsFonts().
+"
+"2","Malgun Gothic Semilight already registered with windowsFonts().
+"
+"2","Marlett already registered with windowsFonts().
+"
+"2","Matura MT Script Capitals already registered with windowsFonts().
+"
+"2","Microsoft Himalaya already registered with windowsFonts().
+"
+"2","Microsoft Yi Baiti already registered with windowsFonts().
+"
+"2","Microsoft New Tai Lue already registered with windowsFonts().
+"
+"2","Microsoft PhagsPa already registered with windowsFonts().
+"
+"2","Microsoft Sans Serif already registered with windowsFonts().
+"
+"2","Microsoft Tai Le already registered with windowsFonts().
+"
+"2","Microsoft Uighur already registered with windowsFonts().
+"
+"2","Mistral already registered with windowsFonts().
+"
+"2","Modern No. 20 already registered with windowsFonts().
+"
+"2","Mongolian Baiti already registered with windowsFonts().
+"
+"2","Monotype Corsiva already registered with windowsFonts().
+"
+"2","MS Outlook already registered with windowsFonts().
+"
+"2","MS Reference Sans Serif already registered with windowsFonts().
+"
+"2","MS Reference Specialty already registered with windowsFonts().
+"
+"2","MV Boli already registered with windowsFonts().
+"
+"2","Myanmar Text already registered with windowsFonts().
+"
+"2","Niagara Engraved already registered with windowsFonts().
+"
+"2","Niagara Solid already registered with windowsFonts().
+"
+"2","Nirmala UI already registered with windowsFonts().
+"
+"2","Nirmala UI Semilight already registered with windowsFonts().
+"
+"2","OCR A Extended already registered with windowsFonts().
+"
+"2","Old English Text MT already registered with windowsFonts().
+"
+"2","Onyx already registered with windowsFonts().
+"
+"2","Palace Script MT already registered with windowsFonts().
+"
+"2","Palatino Linotype already registered with windowsFonts().
+"
+"2","Papyrus already registered with windowsFonts().
+"
+"2","Parchment already registered with windowsFonts().
+"
+"2","Perpetua already registered with windowsFonts().
+"
+"2","Perpetua Titling MT already registered with windowsFonts().
+"
+"2","Playbill already registered with windowsFonts().
+"
+"2","Poor Richard already registered with windowsFonts().
+"
+"2","Pristina already registered with windowsFonts().
+"
+"2","Rage Italic already registered with windowsFonts().
+"
+"2","Ravie already registered with windowsFonts().
+"
+"2","Rockwell already registered with windowsFonts().
+"
+"2","Rockwell Condensed already registered with windowsFonts().
+"
+"2","Rockwell Extra Bold already registered with windowsFonts().
+"
+"2","Script MT Bold already registered with windowsFonts().
+"
+"2","Segoe MDL2 Assets already registered with windowsFonts().
+"
+"2","Segoe Print already registered with windowsFonts().
+"
+"2","Segoe Script already registered with windowsFonts().
+"
+"2","Segoe UI already registered with windowsFonts().
+"
+"2","Segoe UI Light already registered with windowsFonts().
+"
+"2","Segoe UI Semibold already registered with windowsFonts().
+"
+"2","Segoe UI Semilight already registered with windowsFonts().
+"
+"2","Segoe UI Black already registered with windowsFonts().
+"
+"2","Segoe UI Emoji already registered with windowsFonts().
+"
+"2","Segoe UI Historic already registered with windowsFonts().
+"
+"2","Segoe UI Symbol already registered with windowsFonts().
+"
+"2","Showcard Gothic already registered with windowsFonts().
+"
+"2","SimSun-ExtB already registered with windowsFonts().
+"
+"2","Snap ITC already registered with windowsFonts().
+"
+"2","Stencil already registered with windowsFonts().
+"
+"2","Sylfaen already registered with windowsFonts().
+"
+"2","Symbol already registered with windowsFonts().
+"
+"2","Tahoma already registered with windowsFonts().
+"
+"2","Tempus Sans ITC already registered with windowsFonts().
+"
+"2","Times New Roman already registered with windowsFonts().
+"
+"2","Trebuchet MS already registered with windowsFonts().
+"
+"2","Tw Cen MT already registered with windowsFonts().
+"
+"2","Tw Cen MT Condensed already registered with windowsFonts().
+"
+"2","Tw Cen MT Condensed Extra Bold already registered with windowsFonts().
+"
+"2","Verdana already registered with windowsFonts().
+"
+"2","Viner Hand ITC already registered with windowsFonts().
+"
+"2","Vivaldi already registered with windowsFonts().
+"
+"2","Vladimir Script already registered with windowsFonts().
+"
+"2","Webdings already registered with windowsFonts().
+"
+"2","Wingdings already registered with windowsFonts().
+"
+"2","Wingdings 2 already registered with windowsFonts().
+"
+"2","Wingdings 3 already registered with windowsFonts().
+"
 "0","windowsFonts(""Arial"" = windowsFont(""Calibri""))"

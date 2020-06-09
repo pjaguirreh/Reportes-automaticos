@@ -1,5 +1,0 @@
-"0","top_RCA %>% "
-"0","  flextable() %>% "
-"0","  width(j = c(1, 2), width = c(1.8, 1)) %>% "
-"0","  font(fontname = ""Calibri"", part = ""all"") %>% "
-"0","  fontsize(size = 10, part = ""all"")"
