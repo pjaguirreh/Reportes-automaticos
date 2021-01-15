@@ -4,7 +4,7 @@ library(odbc)
 # Conectar a SQL
 con <- dbConnect(odbc::odbc(),
                  encoding = "windows-1252",
-                 .connection_string = "Driver={SQL Server};Server=LAPTOP-PRIBIMSU\\SQLEXPRESS;Database=master;trusted_connection=yes")
+                 .connection_string = "Driver={SQL Server};Server=XXXXXX;Database=XXXXX;trusted_connection=yes")
 
 # Cargar datos desde (4) planillas en SQL
 
